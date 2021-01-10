@@ -17,6 +17,19 @@ public class CharacterAnimatonController : MonoBehaviour
     public Transform CharacterRoot = null;
 
     public Transform AttackRoot = null;
+    //<summary>
+    /// <summary>
+    /// 操作するキャラクタータイプ
+    /// </summary>
+    /// 
+    public enum CharacterType
+    {
+        Invalide,
+        Attacker,
+        SpellCaster,
+        Healer,
+    }
+    public CharacterType characterType = CharacterAnimatonController.CharacterType.Invalide;
 
     public void Awake()
     {
@@ -33,9 +46,16 @@ public class CharacterAnimatonController : MonoBehaviour
 
     IEnumerator StartAttackAnimation(int attackId)
     {
-        yield return StartCoroutine(StartMove());
-        yield return StartCoroutine(StartAnimation(attackId));
-        yield return StartCoroutine(ReturnMove());
+        if (characterType == CharacterType.Attacker)
+        {
+            yield return StartCoroutine(StartMove());
+            yield return StartCoroutine(StartAnimation(attackId));
+            yield return StartCoroutine(ReturnMove());
+        }
+        else {
+            yield return StartCoroutine(StartAnimation(attackId));
+
+        }
     }
     IEnumerator StartMove()
     {
@@ -55,8 +75,12 @@ public class CharacterAnimatonController : MonoBehaviour
     {
         SetAttackAnimation(attackNo);
         ///attackNoが宣言（int)した
-        yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).IsName(GotoMoveAnimationName));///待つ対象がIs.Name(GOto)になるはず        ///animatorStateはCharacterAnimator内にあるGetCurrentAnimatorStateInfとする
-        yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f &&
+        if (characterType == CharacterType.Attacker)
+        {
+            yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).IsName(GotoMoveAnimationName));///待つ対象がIs.Name(GOto)になるはず        ///animatorStateはCharacterAnimator内にあるGetCurrentAnimatorStateInfとする
+        }
+
+            yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f &&
         CharacterAnimator.GetCurrentAnimatorStateInfo(0).IsName(AttackAnimationName));///()がanimatorState内のnotmalizedTiemとし1f以下の場合、かつanimatorStateの名前がttackAnimationNameの場合の時、待つ、繰り替えす。
         CharacterAnimator.SetInteger(AttackAnimationName, 0);///CharacterAnimator内のSetIntegerが
     }
