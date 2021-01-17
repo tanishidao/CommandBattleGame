@@ -36,26 +36,27 @@ public class CharacterAnimatonController : MonoBehaviour
         CharacterAnimator = GetComponent<Animator>();
     
     }
-    void Update()
+     public void StartAction()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
+        
             StartCoroutine( StartAttackAnimation(2));
-        }
+        
     }
 
-    IEnumerator StartAttackAnimation(int attackId)
+    public IEnumerator StartAttackAnimation(int attackId)
     {
-        if (characterType == CharacterType.Attacker)
+        if (characterType == CharacterType.Attacker)//charactorがアタッカーならば攻撃し、帰ってくる
         {
             yield return StartCoroutine(StartMove());
             yield return StartCoroutine(StartAnimation(attackId));
             yield return StartCoroutine(ReturnMove());
         }
-        else {
+        else
+        {
             yield return StartCoroutine(StartAnimation(attackId));
 
         }
+        
     }
     IEnumerator StartMove()
     {
@@ -98,7 +99,7 @@ public class CharacterAnimatonController : MonoBehaviour
         }
     }
 
-    public void SetAttackAnimation(int attackNo)
+        public void SetAttackAnimation(int attackNo)
     {
         if (CharacterAnimator == null)
         {

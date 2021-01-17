@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,4 +17,9 @@ public class CharacterParam
     public int MagicPoint;
     public float Speed;
     public GameCharacterType CharacterType;
+
+    public Action FirstButtonAction;//各ボタンの命名、宣言
+    public Action SecondButtonAction;
+    public Action ThirdButtonAction;
+    public Action FourthButtonAction;
 }

@@ -36,7 +36,7 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
-              
+                GameState = State.Command;
                 break;
             case State.Command:
                 
