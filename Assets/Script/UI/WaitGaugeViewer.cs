@@ -7,7 +7,7 @@ public class WaitGaugeViewer : MonoBehaviour
 {
     public Image[] CharacterGaugeImages = new Image[3];
     public float[] CharacterSpeeds = new float[3];
-
+    public float[] WaitGaugePoints = new float[3];
     public void Init()
     {
         for (int i = 0; i < 3; i++)
@@ -22,6 +22,15 @@ public class WaitGaugeViewer : MonoBehaviour
         {
             CharacterGaugeImages[i].fillAmount += CharacterSpeeds[i] / 10000f;
         }
+    }
+
+    public void GetWaitGaugeRate()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            return;
+        }
+
     }
     //Update
     private void LateUpdate()

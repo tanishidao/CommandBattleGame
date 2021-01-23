@@ -18,6 +18,8 @@ public class GameMainManager : MonoBehaviour
 
     public CharacterParamManager[] CharacterParamManagers = new CharacterParamManager[3];
 
+    public WaitGaugeViewer waitGaugeViewer;
+
     private CharacterParam[] characterParams = new CharacterParam[3];
 
     private void Update()
@@ -36,6 +38,28 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
+                
+               GetComponent< WaitGaugeViewer>();
+                
+                for (int i = 0;i < GetWaitGaugeRate[i]; i++)
+                {
+                    
+                        CenterUIViewer.CheckCenterUIVisible(bool active);
+                            bool active = true;
+
+                    
+
+                }
+
+
+
+
+
+
+
+
+
+
                 GameState = State.Command;
                 break;
             case State.Command:
