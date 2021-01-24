@@ -17,6 +17,9 @@ public class CharacterAnimatonController : MonoBehaviour
     public Transform CharacterRoot = null;
 
     public Transform AttackRoot = null;
+
+    public CharacterParamManager Player = null;
+    public CharacterParamManager Enemy = null;
     //<summary>
     /// <summary>
     /// 操作するキャラクタータイプ
@@ -34,7 +37,8 @@ public class CharacterAnimatonController : MonoBehaviour
     public void Awake()
     {
         CharacterAnimator = GetComponent<Animator>();
-    
+        CharacterParamManager Player = 
+
     }
      public void StartAction()
     {

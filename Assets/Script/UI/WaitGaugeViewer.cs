@@ -7,7 +7,8 @@ public class WaitGaugeViewer : MonoBehaviour
 {
     public Image[] CharacterGaugeImages = new Image[3];
     public float[] CharacterSpeeds = new float[3];
-
+    private bool gaugeStop = false;
+         
     public void Init()
     {
         for (int i = 0; i < 3; i++)
@@ -20,11 +21,31 @@ public class WaitGaugeViewer : MonoBehaviour
     {
         for(int i = 0; i < 3; i++)
         {
+            if(CharacterGaugeImages[i].fillAmount >= 1)
+            {
+                gaugeStop = true;
+            }
+            if(gaugeStop)
+            {
+                return;
+            }
+            
             CharacterGaugeImages[i].fillAmount += CharacterSpeeds[i] / 10000f;
         }
     }
-    //Update
-    private void LateUpdate()
+
+    public void ResetWaitGaugeRate(int characterPos)
+    {
+        CharacterGaugeImages[characterPos].fillAmount= 0;
+        gaugeStop = false;
+    }
+
+    public float GetWaitGaugeRate(int waitGaugeCharacter)
+    {
+        return CharacterGaugeImages[waitGaugeCharacter].fillAmount;
+    }
+        //Update
+        private void LateUpdate()
     {
         WaitGaugeUpDate();
     }

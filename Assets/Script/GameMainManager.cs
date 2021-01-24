@@ -14,12 +14,15 @@ public class GameMainManager : MonoBehaviour
     }
     public State GameState = State.Init;
 
-    public GameParamUIPresenter gameParamUIPresenter;
+    public GameParamUIPresenter gameParamUIPresenter;/// <summary>
+    /// 名前間違えてるけどなんかこれでいいかも、呼び出しの際間違えずに！！！
+    /// </summary>
 
     public CharacterParamManager[] CharacterParamManagers = new CharacterParamManager[3];
 
     private CharacterParam[] characterParams = new CharacterParam[3];
 
+    private int fastCharacterPos = 0;
     private void Update()
     {
         switch (GameState)
@@ -36,13 +39,30 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
-                GameState = State.Command;
-                break;
-            case State.Command:
+                GetComponent<WaitGaugeViewer>();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    if (gameParamUIPresenter.CenterUIViewer.CheckCenterUIVisible(gameParamUIPresenter.WaitGaugeViewer.GetWaitGaugeRate(i)))
+                    {
+                        fastCharacterPos = i;
+                        gameParamUIPresenter.CenterUIViewer.SetCenterUIVisible(true);
+                        GameState = State.Command;
+                    }
+                   
+
+
+                }
+
                 
                 break;
+            case State.Command:
+                gameParamUIPresenter.CenterUIViewer.SetCharacterActionButtons(characterParams[fastCharacterPos],
+                    ()=> gameParamUIPresenter.WaitGaugeViewer.ResetWaitGaugeRate(fastCharacterPos));
+                GameState = State.Action;
+                break;
             case State.Action:
-               
+                GameState = State.Start;
                 break;
             case State.Result:
               

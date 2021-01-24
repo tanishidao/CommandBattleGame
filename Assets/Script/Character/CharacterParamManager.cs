@@ -13,36 +13,65 @@ public class CharacterParamManager : MonoBehaviour
     //本来サーバーあkら送られるが、今回は各キャラごとに設定
     public int CharacterHP = 0;
     public int CharacterMP = 0;
+
+    public int CharacterAttack = 0;
+
+    
+
     public float CharacterSpeed = 0;
     public CharacterParam.GameCharacterType CharacterType = CharacterParam.GameCharacterType.invalide;
     public CharacterAnimatonController CharacterAnimationController = null;
 
+    public bool IsEnemy = false ;
     private void Init()
-        {
+    {
         CharacterParam.HitPoint = CharacterHP;
         CharacterParam.MagicPoint = CharacterMP;
         CharacterParam.Speed = CharacterSpeed;
         CharacterParam.CharacterType = CharacterType;
 
+        CharacterParam.Attack = CharacterAttack;
+
+        
+
+        CharacterParam.IsEnemy = IsEnemy;
         CharacterParam.FirstButtonAction = FirstButtonAction;
         CharacterParam.SecondButtonAction = SecondButtonAction;
         CharacterParam.ThirdButtonAction = ThirdButtonAction;
         CharacterParam.FourthButtonAction = FourthButtonAction;
-
-         CharacterAnimationController = GetComponent<CharacterAnimatonController>();
-    }
-private void Awake()
-{
-    Init();
-}
-        private void FirstButtonAction()
-    {
-
-
-        StartCoroutine( CharacterAnimationController.StartAttackAnimation(2));
         
+        CharacterAnimationController = GetComponent<CharacterAnimatonController>();
+
+       
     }
-   private void SecondButtonAction()
+    private void Awake()
+    {
+        Init();
+    }
+    public void Damage(int damage)
+    {
+        
+
+        CharacterParam.HitPoint -= damage;
+        CharacterParam.HitPoint = CharacterHP;
+        Debug.Log("Hit");
+    }
+    private void FirstButtonAction()
+    {
+        
+        if (IsEnemy)
+        {
+            return;
+        }
+        
+        {
+            Debug.Log("aaaaaaa");
+            StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+            
+        }
+
+    }
+    private void SecondButtonAction()
     {
         Debug.Log("bb");
     }

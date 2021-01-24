@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellCaster
       objectReference: {fileID: 0}
+    - target: {fileID: 4407117073029225104, guid: 6011f4c727312434486e54fc1871d0aa,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: dcb255f655e97024a94ebaa1cc9ec5f9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6011f4c727312434486e54fc1871d0aa, type: 3}
 --- !u!4 &76973002 stripped
@@ -365,6 +370,7 @@ GameObject:
   - component: {fileID: 113177865}
   - component: {fileID: 113177864}
   - component: {fileID: 113177868}
+  - component: {fileID: 113177870}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -467,6 +473,26 @@ MonoBehaviour:
   CharacterHpViewer: {fileID: 740837079}
   WaitGaugeViewer: {fileID: 1235590788}
   CenterUIViewer: {fileID: 1758688127}
+--- !u!114 &113177870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113177863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8dd98ee8a7e5b46ad86c4428ea17c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterGaugeImages:
+  - {fileID: 126370144}
+  - {fileID: 1983329674}
+  - {fileID: 1232548193}
+  CharacterSpeeds:
+  - 0
+  - 0
+  - 0
 --- !u!1 &126370142
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +810,47 @@ RectTransform:
   m_AnchoredPosition: {x: 480, y: 0}
   m_SizeDelta: {x: -960, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &307681362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3427353302551209580, guid: 8df0e3ffa3297b748b8d6c7a20206123,
+    type: 3}
+  m_PrefabInstance: {fileID: 1942111599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &307681363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307681362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deba464d70b06cc4ba45f04ff4d22bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterHP: 500
+  CharacterMP: 0
+  CharacterAttack: 0
+  CharacterSpeed: 0
+  CharacterType: 0
+  CharacterAnimationController: {fileID: 0}
+  IsEnemy: 1
+--- !u!114 &307681364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307681362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02828aef94b2ac458004fafc55e9fbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterAnimator: {fileID: 0}
+  CharacterRoot: {fileID: 0}
+  AttackRoot: {fileID: 0}
+  characterType: 0
 --- !u!1 &333338736 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4401562828062368752, guid: 7b0697b4e308a364cadabd5abf648ba7,
@@ -804,8 +871,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterHP: 9999
   CharacterMP: 9999
+  CharacterAttack: 100
   CharacterSpeed: 100
   CharacterType: 1
+  CharacterAnimationController: {fileID: 0}
+  IsEnemy: 0
 --- !u!4 &334003413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 864899052858907125, guid: 6011f4c727312434486e54fc1871d0aa,
@@ -1205,18 +1275,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 536161135}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &536161135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,7 +1394,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 595927111}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &595927111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1558,8 +1628,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterHP: 500
   CharacterMP: 100
+  CharacterAttack: 10
   CharacterSpeed: 50
   CharacterType: 3
+  CharacterAnimationController: {fileID: 0}
+  IsEnemy: 0
 --- !u!114 &698138191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2037,8 +2110,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterHP: 500
   CharacterMP: 100
+  CharacterAttack: 10
   CharacterSpeed: 90
   CharacterType: 2
+  CharacterAnimationController: {fileID: 0}
+  IsEnemy: 0
 --- !u!114 &829434600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2439,7 +2515,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 980748520}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &980748520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2748,7 +2835,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1093367734}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &1093367734
 MonoBehaviour:
   m_ObjectHideFlags: 0
