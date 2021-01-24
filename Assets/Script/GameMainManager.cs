@@ -20,6 +20,8 @@ public class GameMainManager : MonoBehaviour
 
     public CharacterParamManager[] CharacterParamManagers = new CharacterParamManager[3];
 
+    public WaitGaugeViewer waitGaugeViewer;
+
     private CharacterParam[] characterParams = new CharacterParam[3];
 
     private int fastCharacterPos = 0;
@@ -39,6 +41,7 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
+<<<<<<< HEAD
                 GetComponent<WaitGaugeViewer>();
 
                 for (int i = 0; i < 3; i++)
@@ -55,6 +58,31 @@ public class GameMainManager : MonoBehaviour
                 }
 
                 
+=======
+                
+               GetComponent< WaitGaugeViewer>();
+                
+                for (int i = 0;i < GetWaitGaugeRate[i]; i++)
+                {
+                    
+                        CenterUIViewer.CheckCenterUIVisible(bool active);
+                            bool active = true;
+
+                    
+
+                }
+
+
+
+
+
+
+
+
+
+
+                GameState = State.Command;
+>>>>>>> d0be461ec3ff5820fdd105405bdc019530c14ee5
                 break;
             case State.Command:
                 gameParamUIPresenter.CenterUIViewer.SetCharacterActionButtons(characterParams[fastCharacterPos],
