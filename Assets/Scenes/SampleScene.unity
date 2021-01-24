@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellCaster
       objectReference: {fileID: 0}
+    - target: {fileID: 4407117073029225104, guid: 6011f4c727312434486e54fc1871d0aa,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2cce83b49c5102d4b85897721be44ad2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6011f4c727312434486e54fc1871d0aa, type: 3}
 --- !u!4 &76973002 stripped
