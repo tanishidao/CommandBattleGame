@@ -41,7 +41,6 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
-<<<<<<< HEAD
                 GetComponent<WaitGaugeViewer>();
 
                 for (int i = 0; i < 3; i++)
@@ -58,31 +57,21 @@ public class GameMainManager : MonoBehaviour
                 }
 
                 
-=======
-                
                GetComponent< WaitGaugeViewer>();
                 
-                for (int i = 0;i < GetWaitGaugeRate[i]; i++)
-                {
+                //for (int i = 0;i < GetWaitGaugeRate[i]; i++)
+                //{
                     
-                        CenterUIViewer.CheckCenterUIVisible(bool active);
-                            bool active = true;
+                //        CenterUIViewer.CheckCenterUIVisible(bool active);
+                //            bool active = true;
 
                     
 
-                }
-
-
-
-
-
-
-
+                //}
 
 
 
                 GameState = State.Command;
->>>>>>> d0be461ec3ff5820fdd105405bdc019530c14ee5
                 break;
             case State.Command:
                 gameParamUIPresenter.CenterUIViewer.SetCharacterActionButtons(characterParams[fastCharacterPos],

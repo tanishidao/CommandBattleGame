@@ -37,7 +37,7 @@ public class CharacterAnimatonController : MonoBehaviour
     public void Awake()
     {
         CharacterAnimator = GetComponent<Animator>();
-        CharacterParamManager Player = 
+       
 
     }
      public void StartAction()
