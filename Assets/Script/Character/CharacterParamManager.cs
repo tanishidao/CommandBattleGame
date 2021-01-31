@@ -16,6 +16,7 @@ public class CharacterParamManager : MonoBehaviour
 
     public int CharacterAttack = 0;
 
+    public int ButtonNo = 0;
     
 
     public float CharacterSpeed = 0;
@@ -64,20 +65,61 @@ public class CharacterParamManager : MonoBehaviour
             return;
         }
         
+      else  
         {
-            Debug.Log("aaaaaaa");
-            StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+           
             
+                Debug.Log("aaaaaaa");
+                StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+                ButtonNo += 0;
+           /// Damage();
+
         }
 
     }
     private void SecondButtonAction()
     {
-        Debug.Log("bb");
+        ButtonNo += 1;
+        if (IsEnemy)
+        {
+            return;
+        }
+
+       else 
+        {
+            if (CharacterType == CharacterParam.GameCharacterType.SpellCaster)
+            {
+                Debug.Log("bbbb");
+                StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+            }
+
+            
+            
+                
+        }
+
+
+
+
+
+
     }
     private void ThirdButtonAction()
     {
-        Debug.Log("cc");
+        ButtonNo += 3;
+        if (IsEnemy)
+        {
+            return;
+        }
+
+        else
+        {
+
+
+
+            StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+            Debug.Log("cc");
+        }
     }
     private void FourthButtonAction()
     {

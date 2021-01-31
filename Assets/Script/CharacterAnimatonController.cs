@@ -9,7 +9,7 @@ public class CharacterAnimatonController : MonoBehaviour
     private const string GotoMoveAnimationName = "GotoMove";
 
     private const string ReturnMoveAnimationName = "ReturnMove";
-    
+
     private const string AttackAnimationName = "Attack";
 
     private const string IdleAnimationName = "Idle";
@@ -18,8 +18,12 @@ public class CharacterAnimatonController : MonoBehaviour
 
     public Transform AttackRoot = null;
 
-    public CharacterParamManager Player = null;
+    public CharacterParamManager characterParamManager = null;
+
     public CharacterParamManager Enemy = null;
+    public CharacterParamManager targetCharacterParamManager = null;
+
+
     //<summary>
     /// <summary>
     /// 操作するキャラクタータイプ
@@ -34,17 +38,20 @@ public class CharacterAnimatonController : MonoBehaviour
     }
     public CharacterType characterType = CharacterAnimatonController.CharacterType.Invalide;
 
+    public object Damage { get; private set; }
+
     public void Awake()
     {
         CharacterAnimator = GetComponent<Animator>();
-       
+
+        CharacterParamManager Player = GetComponent<CharacterParamManager>();
 
     }
-     public void StartAction()
+    public void StartAction()
     {
-        
-            StartCoroutine( StartAttackAnimation(2));
-        
+
+        StartCoroutine(StartAttackAnimation(2));
+
     }
 
     public IEnumerator StartAttackAnimation(int attackId)
@@ -60,7 +67,7 @@ public class CharacterAnimatonController : MonoBehaviour
             yield return StartCoroutine(StartAnimation(attackId));
 
         }
-        
+
     }
     IEnumerator StartMove()
     {
@@ -75,7 +82,7 @@ public class CharacterAnimatonController : MonoBehaviour
             yield return null;
         }
     }
-    
+
     IEnumerator StartAnimation(int attackNo)///IEnumとcoroutineはセット
     {
         SetAttackAnimation(attackNo);
@@ -85,7 +92,7 @@ public class CharacterAnimatonController : MonoBehaviour
             yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).IsName(GotoMoveAnimationName));///待つ対象がIs.Name(GOto)になるはず        ///animatorStateはCharacterAnimator内にあるGetCurrentAnimatorStateInfとする
         }
 
-            yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f &&
+        yield return new WaitWhile(() => CharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f &&
         CharacterAnimator.GetCurrentAnimatorStateInfo(0).IsName(AttackAnimationName));///()がanimatorState内のnotmalizedTiemとし1f以下の場合、かつanimatorStateの名前がttackAnimationNameの場合の時、待つ、繰り替えす。
         CharacterAnimator.SetInteger(AttackAnimationName, 0);///CharacterAnimator内のSetIntegerが
     }
@@ -95,20 +102,50 @@ public class CharacterAnimatonController : MonoBehaviour
         var distane_two = Vector3.Distance(transform.position, CharacterRoot.position);
         var elapsedTime = 0f;
         float waitTime = 1f;
-        while(this.transform != CharacterRoot && elapsedTime < waitTime)
-            {
+        while (this.transform != CharacterRoot && elapsedTime < waitTime)
+        {
             this.transform.position = Vector3.Lerp(transform.position, CharacterRoot.position, (elapsedTime / waitTime) / distane_two);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
 
-        public void SetAttackAnimation(int attackNo)
+    public void SetAttackAnimation(int attackNo)
     {
+        Debug.Log(attackNo);
         if (CharacterAnimator == null)
         {
             return;
         }
         CharacterAnimator.SetInteger(AttackAnimationName, attackNo);
-    }   
+    }
+
+    public void Hit()
+    {
+
+
+        Debug.Log("あたった");
+
+        ///相手のCharacterManagerを取得して相手のcharacterああああ
+        targetCharacterParamManager = AttackRoot.transform.parent.GetComponentInChildren<CharacterParamManager>();
+
+        var damage = characterParamManager.CharacterAttack;
+
+        if (characterParamManager.ButtonNo == 1)
+        {
+            damage *= 10;
+            characterParamManager.CharacterMP -= 10;
+        }
+
+        if(characterType == CharacterType.Healer|| characterParamManager.ButtonNo == 3)
+        {
+            damage *= -10;
+            characterParamManager.CharacterMP -= 10;
+        }
+
+        targetCharacterParamManager.Damage(damage);
+
+
+    }
+
 }

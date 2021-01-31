@@ -25,8 +25,14 @@ public class GameMainManager : MonoBehaviour
     private CharacterParam[] characterParams = new CharacterParam[3];
 
     private int fastCharacterPos = 0;
+    public CharacterParamManager EnemyCharacterParamManager = null;
     private void Update()
     {
+       if(EnemyCharacterParamManager.CharacterHP < 0)
+        {
+            GameState = State.Result;
+        }
+        
         switch (GameState)
         {
             case State.Init:
@@ -57,7 +63,7 @@ public class GameMainManager : MonoBehaviour
                 }
 
                 
-               GetComponent< WaitGaugeViewer>();
+             
                 
                 //for (int i = 0;i < GetWaitGaugeRate[i]; i++)
                 //{
