@@ -24,6 +24,9 @@ public class CharacterParamManager : MonoBehaviour
     public CharacterAnimatonController CharacterAnimationController = null;
 
     public bool IsEnemy = false ;
+
+    private float attackSpan;
+ 
     private void Init()
     {
         CharacterParam.HitPoint = CharacterHP;
@@ -34,29 +37,45 @@ public class CharacterParamManager : MonoBehaviour
         CharacterParam.Attack = CharacterAttack;
 
         
-
-        CharacterParam.IsEnemy = IsEnemy;
-        CharacterParam.FirstButtonAction = FirstButtonAction;
-        CharacterParam.SecondButtonAction = SecondButtonAction;
-        CharacterParam.ThirdButtonAction = ThirdButtonAction;
-        CharacterParam.FourthButtonAction = FourthButtonAction;
+        if(!IsEnemy)
+        {
+            CharacterParam.IsEnemy = IsEnemy;
+            CharacterParam.FirstButtonAction = FirstButtonAction;
+            CharacterParam.SecondButtonAction = SecondButtonAction;
+            CharacterParam.ThirdButtonAction = ThirdButtonAction;
+            CharacterParam.FourthButtonAction = FourthButtonAction;
+        }
+        else
+        {
+            attackSpan = 10f;
+        }
         
         CharacterAnimationController = GetComponent<CharacterAnimatonController>();
 
        
     }
+    private void Update()
+    {
+        if(IsEnemy)
+        {
+            attackSpan -= Time.deltaTime;
+            if(attackSpan < 0)
+            {
+                StartCoroutine(CharacterAnimationController.StartAttackAnimation(2));
+                attackSpan = 10f;
+            }
+        }
+    }
+
+
+
+
+
     private void Awake()
     {
         Init();
     }
-    public void Damage(int damage)
-    {
-        
-
-        CharacterParam.HitPoint -= damage;
-        CharacterParam.HitPoint = CharacterHP;
-        Debug.Log("Hit");
-    }
+    
     private void FirstButtonAction()
     {
         
@@ -126,6 +145,25 @@ public class CharacterParamManager : MonoBehaviour
         Debug.Log("dd");
     }
 
+    public CharacterHpViewer CharacterHpViewer = null;
+    public void Damage(int damage)
+    {
+        var characterPos = CharacterParam.CharacterPos;
+
+        CharacterParam.HitPoint -= damage;
+        CharacterParam.HitPoint = CharacterHP;
+
+        if (!IsEnemy)
+        {
+            if(damage < -1 && CharacterHpViewer.CharacterMaxHps[characterPos] < CharacterHP)
+            {
+                CharacterHP = CharacterHpViewer.CharacterMaxHps[characterPos];
+                CharacterParam.HitPoint = CharacterHP;
+            }
+            CharacterHpViewer.SetHP(characterPos, CharacterHP);
+        }
+        Debug.Log("Hit");
+    }
 
 
 }
