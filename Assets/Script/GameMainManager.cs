@@ -9,6 +9,7 @@ public class GameMainManager : MonoBehaviour
         Init,
         Start,
         Command,
+       CameraAction,
         Action,
         Result,
     }
@@ -25,14 +26,18 @@ public class GameMainManager : MonoBehaviour
     private CharacterParam[] characterParams = new CharacterParam[3];
 
     private int fastCharacterPos = 0;
+    
     public CharacterParamManager EnemyCharacterParamManager = null;
+
+    public DollyCameraManager DollyCameraManager;
+
     private void Update()
     {
        if(EnemyCharacterParamManager.CharacterHP < 0)
         {
             GameState = State.Result;
         }
-        
+
         switch (GameState)
         {
             case State.Init:
@@ -40,6 +45,7 @@ public class GameMainManager : MonoBehaviour
                 {
                     if (CharacterParamManagers[i] != null)
                     {
+                        CharacterParamManagers[i].CharacterParam.CharacterPos = i;
                         characterParams[i] = CharacterParamManagers[i].CharacterParam;
                     }
                 }
@@ -47,8 +53,6 @@ public class GameMainManager : MonoBehaviour
                 GameState = State.Start;
                 break;
             case State.Start:
-                GetComponent<WaitGaugeViewer>();
-
                 for (int i = 0; i < 3; i++)
                 {
                     if (gameParamUIPresenter.CenterUIViewer.CheckCenterUIVisible(gameParamUIPresenter.WaitGaugeViewer.GetWaitGaugeRate(i)))
@@ -57,38 +61,51 @@ public class GameMainManager : MonoBehaviour
                         gameParamUIPresenter.CenterUIViewer.SetCenterUIVisible(true);
                         GameState = State.Command;
                     }
-                   
-
 
                 }
-
-                
-             
-                
-                //for (int i = 0;i < GetWaitGaugeRate[i]; i++)
-                //{
-                    
-                //        CenterUIViewer.CheckCenterUIVisible(bool active);
-                //            bool active = true;
-
-                    
-
-                //}
-
 
 
                 GameState = State.Command;
                 break;
             case State.Command:
                 gameParamUIPresenter.CenterUIViewer.SetCharacterActionButtons(characterParams[fastCharacterPos],
-                    ()=> gameParamUIPresenter.WaitGaugeViewer.ResetWaitGaugeRate(fastCharacterPos));
+                    () =>
+                    {
+                        gameParamUIPresenter.WaitGaugeViewer.ResetWaitGaugeRate(fastCharacterPos);
+                        GameState = State.CameraAction;
+                    });
+           
+                break;
+              case State.CameraAction:
+                //カメラが動いてなかったら動かす
+                if(!DollyCameraManager.IsMoving)
+                {
+                    DollyCameraManager.StatrtCameraAction(fastCharacterPos);
+                    StartCoroutine(DollyCameraManager.WaitCameraEnd());
+                }
+                //カメラの動き終わったらGamestateを進める
+                if(DollyCameraManager.IsMoveEnd)
+                {
+                   if(characterParams[fastCharacterPos].CharacterType == CharacterParam.GameCharacterType.Attacker)
+                    {
+                        Debug.Log("当たったかー");
+                        DollyCameraManager.AttackCameraRotate();
+                        GameState =State.Action;
+                    }
+                }
+
                 GameState = State.Action;
                 break;
+
             case State.Action:
+              
+
+
+
                 GameState = State.Start;
                 break;
             case State.Result:
-              
+                Debug.Log("YOU WIN");
                 break;
         }
     }

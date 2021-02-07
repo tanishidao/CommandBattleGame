@@ -14,12 +14,12 @@ public class GameParamUIPresenter : MonoBehaviour
         {
             if (CharacterParams[i] != null)
             {
+                Debug.Log(CharacterParams[i].HitPoint);
                 CharacterHpViewer.CharacterMaxHps[i] = CharacterParams[i].HitPoint;
                 CharacterHpViewer.CharacterHps[i] = CharacterParams[i].HitPoint;
                 WaitGaugeViewer.CharacterSpeeds[i] = CharacterParams[i].Speed;
             }
 
-            
         }
         WaitGaugeViewer.Init();
     }

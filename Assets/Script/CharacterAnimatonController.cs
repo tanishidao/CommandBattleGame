@@ -22,6 +22,7 @@ public class CharacterAnimatonController : MonoBehaviour
 
     public CharacterParamManager Enemy = null;
     public CharacterParamManager targetCharacterParamManager = null;
+    public GameMainManager gameMainManager= null;
 
 
     //<summary>
@@ -124,10 +125,19 @@ public class CharacterAnimatonController : MonoBehaviour
     {
 
 
-        Debug.Log("あたった");
+       if(characterParamManager.IsEnemy)
+        {//0~2まで選ばれる
+            var pos = Random.Range(0, 3);
+            targetCharacterParamManager = gameMainManager.CharacterParamManagers[pos];
 
-        ///相手のCharacterManagerを取得して相手のcharacterああああ
-        targetCharacterParamManager = AttackRoot.transform.parent.GetComponentInChildren<CharacterParamManager>();
+        }
+        else
+        {
+            ///相手のCharacterManagerを取得して相手のcharacterああああ
+            targetCharacterParamManager = AttackRoot.transform.parent.GetComponentInChildren<CharacterParamManager>();
+        }
+
+  
 
         var damage = characterParamManager.CharacterAttack;
 
@@ -141,8 +151,23 @@ public class CharacterAnimatonController : MonoBehaviour
         {
             damage *= -10;
             characterParamManager.CharacterMP -= 10;
+            
+            var min = gameMainManager.CharacterParamManagers[0].CharacterHP;
+
+            targetCharacterParamManager = gameMainManager.CharacterParamManagers[0];
+
+            for(int i = 0; i < gameMainManager.CharacterParamManagers.Length;i++)
+                if(gameMainManager.CharacterParamManagers[i].CharacterHP < min)
+                {
+                    min = gameMainManager.CharacterParamManagers[i].CharacterHP;
+                    targetCharacterParamManager = gameMainManager.CharacterParamManagers[i];
+                }
         }
 
+         
+        
+       
+        
         targetCharacterParamManager.Damage(damage);
 
 

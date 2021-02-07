@@ -27,4 +27,5 @@ public class CharacterParam
     public Action FourthButtonAction;
 
     public bool IsEnemy;
+    public int CharacterPos;
 }
